@@ -112,7 +112,7 @@ cd agent_world`}</CodeBlock>
         </ul>
       </section>
 
-      <section>
+      <section className="mb-12">
         <h2 className="text-aw-muted text-xs uppercase tracking-widest mb-3 font-medium">Voice support</h2>
         <p className="text-aw-muted text-sm leading-relaxed">
           Voice input/output requires Node.js and a valid OpenClaw workspace with{" "}
@@ -122,6 +122,23 @@ cd agent_world`}</CodeBlock>
           relative to the Agent World directory.
         </p>
       </section>
+
+      <div className="flex gap-6 border-t border-aw-border pt-8">
+        <a
+          href="https://github.com/luccathescientist/agent_world"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-aw-muted hover:text-aw-text transition-colors underline underline-offset-2"
+        >
+          GitHub
+        </a>
+        <a
+          href="/changelog"
+          className="text-sm text-aw-muted hover:text-aw-text transition-colors underline underline-offset-2"
+        >
+          Changelog
+        </a>
+      </div>
     </div>
   );
 }

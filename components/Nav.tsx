@@ -5,7 +5,6 @@ import { githubAvatar } from "./Avatar";
 
 const links = [
   { href: "/install", label: "Install" },
-  { href: "/changelog", label: "Changelog" },
   { href: "/worlds", label: "Worlds" },
   { href: "/forum", label: "Forum" },
 ];
@@ -63,14 +62,6 @@ export default async function Nav() {
               {l.label}
             </Link>
           ))}
-          <a
-            href="https://github.com/luccathescientist/agent_world"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-aw-text transition-colors"
-          >
-            GitHub
-          </a>
           {user ? (
             <UserMenu name={name} avatarSrc={avatarSrc} />
           ) : (
