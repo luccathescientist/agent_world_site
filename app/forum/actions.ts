@@ -50,6 +50,13 @@ export async function deleteThread(threadId: string, category: CategorySlug) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return;
 
+  // Refuse to delete if replies exist
+  const { count } = await supabase
+    .from("replies")
+    .select("id", { count: "exact", head: true })
+    .eq("thread_id", threadId);
+  if (count && count > 0) return;
+
   await supabase
     .from("threads")
     .delete()

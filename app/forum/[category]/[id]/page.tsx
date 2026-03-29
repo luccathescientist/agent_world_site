@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCategory, type CategorySlug } from "@/lib/forum";
 import { deleteThread, deleteReply } from "@/app/forum/actions";
+import { augmentQuoteMarkers } from "@/lib/forum-display";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { ReplyComposer } from "@/components/ReplyComposer";
 import { QuoteButton } from "@/components/QuoteButton";
 import { InlineEditThread, InlineEditReply } from "@/components/InlineEdit";
+import { DeleteButton } from "@/components/DeleteButton";
 
 export async function generateMetadata({
   params,
@@ -18,11 +20,6 @@ export async function generateMetadata({
   const supabase = await createClient();
   const { data } = await supabase.from("threads").select("title").eq("id", id).single();
   return { title: data ? `${data.title} — Agent World Forum` : "Forum — Agent World" };
-}
-
-function authorLabel(userId: string) {
-  // We don't have names stored — use a shortened user ID as a stable anonymous label
-  return `user_${userId.slice(0, 6)}`;
 }
 
 export default async function ThreadPage({
@@ -44,14 +41,13 @@ export default async function ThreadPage({
 
   if (!thread) notFound();
 
-  // Fetch author display names from auth metadata via profiles
+  // Fetch author display names via profiles
   const userIds = [...new Set([thread.user_id, ...(replies?.map((r) => r.user_id) ?? [])])];
   const { data: profiles } = await supabase
     .from("profiles")
     .select("id, github_url")
     .in("id", userIds);
 
-  // Build display name map: prefer GitHub handle, fall back to short ID
   const nameMap: Record<string, string> = {};
   userIds.forEach((uid) => {
     const p = profiles?.find((p) => p.id === uid);
@@ -59,11 +55,16 @@ export default async function ThreadPage({
     nameMap[uid] = gh ? `@${gh}` : `user_${uid.slice(0, 6)}`;
   });
 
+  // Build set of edited reply IDs for quote augmentation
+  const editedIds = new Set(
+    replies?.filter((r) => r.updated_at !== r.created_at).map((r) => r.id) ?? []
+  );
+
+  const replyCount = replies?.length ?? 0;
+  const isThreadOwner = user?.id === thread.user_id;
   const threadCreatedAt = new Date(thread.created_at).toLocaleDateString("en-US", {
     year: "numeric", month: "long", day: "numeric",
   });
-
-  const isThreadOwner = user?.id === thread.user_id;
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
@@ -82,7 +83,7 @@ export default async function ThreadPage({
             <span className="ml-2 italic">(edited)</span>
           )}
         </div>
-        <MarkdownContent body={thread.body} />
+        <MarkdownContent body={augmentQuoteMarkers(thread.body, editedIds)} />
 
         {isThreadOwner && (
           <div className="flex gap-3 mt-5 pt-4 border-t border-aw-border items-center">
@@ -92,14 +93,13 @@ export default async function ThreadPage({
               title={thread.title}
               body={thread.body}
             />
-            <form action={deleteThread.bind(null, thread.id, cat.slug as CategorySlug)}>
-              <button
-                type="submit"
-                className="text-xs text-aw-muted border border-aw-border px-3 py-1.5 rounded-lg hover:bg-red-50 hover:text-aw-red hover:border-red-200 transition-colors"
-              >
-                Delete thread
-              </button>
-            </form>
+            <DeleteButton
+              action={deleteThread.bind(null, thread.id, cat.slug as CategorySlug)}
+              label="Delete thread"
+              confirmMessage="Delete this thread? This cannot be undone."
+              disabled={replyCount > 0}
+              disabledTitle="Remove all replies before deleting this thread"
+            />
           </div>
         )}
       </div>
@@ -123,10 +123,10 @@ export default async function ThreadPage({
                     {edited && <span className="ml-2 italic">(edited)</span>}
                   </span>
                   {user && (
-                    <QuoteButton authorName={authorName} body={reply.body} />
+                    <QuoteButton replyId={reply.id} authorName={authorName} body={reply.body} />
                   )}
                 </div>
-                <MarkdownContent body={reply.body} />
+                <MarkdownContent body={augmentQuoteMarkers(reply.body, editedIds)} />
                 {isReplyOwner && (
                   <div className="flex gap-3 mt-4 pt-3 border-t border-aw-border items-center">
                     <InlineEditReply
@@ -135,14 +135,11 @@ export default async function ThreadPage({
                       catSlug={cat.slug as CategorySlug}
                       body={reply.body}
                     />
-                    <form action={deleteReply.bind(null, reply.id, id, cat.slug as CategorySlug)}>
-                      <button
-                        type="submit"
-                        className="text-xs text-aw-muted border border-aw-border px-3 py-1.5 rounded-lg hover:bg-red-50 hover:text-aw-red hover:border-red-200 transition-colors"
-                      >
-                        Delete
-                      </button>
-                    </form>
+                    <DeleteButton
+                      action={deleteReply.bind(null, reply.id, id, cat.slug as CategorySlug)}
+                      label="Delete"
+                      confirmMessage="Delete this reply? This cannot be undone."
+                    />
                   </div>
                 )}
               </div>
