@@ -75,15 +75,41 @@ command in the core `agent_world` tool first.
 
 ---
 
-### Site 0.5.0 — Forum
+### Site 0.5.0 — Forum ✓ complete
 
 Goal: threaded discussion for the community.
 
-- Forum categories: General, Show & Tell, Sprites & Assets, Feature Requests,
-  Installation Help
-- Thread list and thread detail pages
-- Reply composer (authenticated)
-- Basic moderation: flag / hide posts
+- Five categories: General, Show & Tell, Sprites & Assets, Feature Requests, Tech Talk
+- Thread list and thread detail pages with flat replies
+- Markdown editor with write/preview toggle, image upload, GFM rendering
+- Quote button (pre-fills composer with attributed blockquote; tracks edits)
+- Inline edit and delete for own threads/replies; confirmation dialogs
+- Delete thread blocked if replies exist (server + UI guard)
+- Pagination for thread lists and worlds browse page
+
+---
+
+### Site 0.5.1 — Forum polish (Tier 1)
+
+Goal: UI quality-of-life pass on the forum and nav.
+
+- **Avatar thumbnails** — derive from GitHub URL (`github_url.png?size=40`); letter fallback for Google-only users
+- **User dropdown menu** — click username in nav → dropdown with Profile and Sign out
+- **Profile: activity** — threads and replies sections on `/profile` with jump links (`#reply-UUID`)
+- **Sort threads by last activity** — float threads with recent replies to top of list
+- **Markdown quick reference** — collapsible syntax cheatsheet in the editor
+- **Favicon + nav logo** — icon in `/public` and graphic next to "Agent World" in the titlebar
+
+---
+
+### Site 0.5.2 — Forum search and polish (Tier 2)
+
+Goal: discoverability and developer experience in the forum.
+
+- **Full-text search** — Supabase `tsvector` across threads + replies; `/forum/search?q=` page
+- **Code syntax highlighting** — `rehype-highlight` for code blocks (important for Tech Talk)
+- **Jump to latest reply** — link on thread list rows to scroll to the last reply
+- **"New" badge** — mark threads with activity since your last visit (localStorage or `last_seen` table)
 
 ---
 
@@ -105,10 +131,12 @@ their profile.
 
 Goal: quality-of-life for community content.
 
-- Voting / starring for worlds and assets
-- User reputation or activity badges
-- Notifications (replies, new content in followed threads)
-- RSS feed for changelog
+- **Voting / starring** for worlds and forum threads
+- **Reply notifications** — email when someone replies to your thread (needs email provider e.g. Resend)
+- **Thread tags** — cross-category tagging (e.g. `#pixi`, `#tilemap`); requires tags table
+- **Thread pinning / locking** — requires mod/admin role concept
+- **User reputation or activity badges**
+- **RSS feed** for changelog
 
 ---
 
