@@ -29,8 +29,11 @@ export async function middleware(request: NextRequest) {
   // getUser, otherwise the session cookie may not be refreshed correctly.
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Protect /profile — redirect unauthenticated users to home
-  if (!user && request.nextUrl.pathname.startsWith("/profile")) {
+  // Protect /profile and /worlds/new — redirect unauthenticated users to home
+  if (!user && (
+    request.nextUrl.pathname.startsWith("/profile") ||
+    request.nextUrl.pathname.startsWith("/worlds/new")
+  )) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
     return NextResponse.redirect(url);
