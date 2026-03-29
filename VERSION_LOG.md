@@ -53,7 +53,7 @@ Applied the `target: ES2017` recommendation from the Next.js build output.
 
 ## Release 0.2.0: Content and media
 
-Status: `planned`
+Status: `in progress`
 
 Expected focus:
 
@@ -62,9 +62,13 @@ Expected focus:
 - OpenGraph / social meta tags
 - real domain wired to install command
 
-Commits:
+### Committed
 
-- none yet
+#### `dc76286` — Add real screenshots and GIF, OG tags, boya.dev domain
+
+Captured world canvas screenshot and 13s animated GIF via Playwright; replaced
+hero placeholder with optimized GIF; added OpenGraph/Twitter card meta tags;
+updated install command URLs to boya.dev.
 
 ---
 
