@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Agent World",
   description:
     "A browser UI that renders your AI agents as characters in a living, 16-bit office world.",
-  metadataBase: new URL("https://boya.dev"),
+  metadataBase: new URL("https://agent-world.dev"),
   openGraph: {
     title: "Agent World",
     description:
       "A browser UI that renders your AI agents as characters in a living, 16-bit office world.",
-    url: "https://boya.dev",
+    url: "https://agent-world.dev",
     siteName: "Agent World",
     images: [
       {

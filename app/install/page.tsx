@@ -51,7 +51,7 @@ export default function InstallPage() {
 
       <section className="mb-12">
         <h2 className="text-aw-gold text-xs uppercase tracking-widest mb-6">One-line install</h2>
-        <CodeBlock>curl -fsSL https://boya.dev/install.sh | sh</CodeBlock>
+        <CodeBlock>curl -fsSL https://agent-world.dev/install.sh | sh</CodeBlock>
         <p className="text-aw-muted text-sm">
           This clones the repository, installs dependencies, and prints the command to start the server.
         </p>

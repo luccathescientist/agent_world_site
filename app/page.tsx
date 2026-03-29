@@ -54,7 +54,7 @@ export default function Home() {
         {/* Install command */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
           <div className="bg-aw-surface border border-aw-border rounded px-5 py-3 text-sm text-aw-green font-mono select-all">
-            curl -fsSL https://boya.dev/install.sh | sh
+            curl -fsSL https://agent-world.dev/install.sh | sh
           </div>
           <Link
             href="/install"
