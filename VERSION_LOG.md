@@ -70,22 +70,60 @@ Captured world canvas screenshot and 13s animated GIF via Playwright; replaced
 hero placeholder with optimized GIF; added OpenGraph/Twitter card meta tags;
 updated install command URLs to boya.dev.
 
+#### `0be4093` — Switch domain from boya.dev to agent-world.dev
+
+Updated install command URLs, OG metadata, and install script to agent-world.dev.
+
+#### `ba1303d` — Redesign to clean white/black theme; add high-res GIF
+
+Replaced dark retro palette with clean light theme; removed mono font; modernized
+all page layouts; replaced low-res GIF with native 960x688 canvas capture.
+
+#### `2e26c81` — Replace GIF with native 960x688 canvas capture
+
+Pinned canvas to viewport origin via CSS before recording; screenshot and GIF
+are now pixel-perfect at 960x688 with no browser scaling artifacts.
+
+### Shipped state for 0.2.0
+
+- Clean white/black modern theme with system sans-serif font
+- Native 960x688 animated GIF and screenshot captured from live canvas
+- OpenGraph and Twitter card meta tags
+- Domain set to agent-world.dev throughout
+- Install script live at agent-world.dev/install.sh
+
 ---
 
 ## Release 0.3.0: Auth foundation
 
-Status: `planned`
+Status: `complete`
 
-Expected focus:
+Goal: lay the infrastructure for community features with Google OAuth.
 
-- Supabase project setup
-- Google OAuth sign-in
-- user profile page
-- session management in nav
+### Committed
 
-Commits:
+#### `3a20140` — Scaffold auth foundation with Supabase + Google OAuth
 
-- none yet
+Added Supabase browser/server clients, middleware for session refresh, OAuth
+callback route, signInWithGoogle/signOut server actions, Sign in button in nav,
+and /profile page showing avatar, name, email, and join date.
+
+#### `1fb5572` — Add error detail to auth callback redirect for debugging
+
+Improved callback error logging to surface the exact Supabase error reason in the URL.
+
+#### `eb6e338` — Update .env.local.example with Supabase project URL
+
+Documented the Supabase project URL in the env example file.
+
+### Shipped state for 0.3.0
+
+- Supabase project connected (nxrjilwzyzblnqyyelsn.supabase.co)
+- Google OAuth working end-to-end on agent-world.dev
+- Nav shows Sign in / user name + Sign out based on session
+- /profile page live with avatar, name, email, join date
+- Middleware guards /profile and refreshes sessions
+- Local dev auth supported via localhost:3000/auth/callback
 
 ---
 
