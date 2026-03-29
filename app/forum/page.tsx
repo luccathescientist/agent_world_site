@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { createClient } from "@/lib/supabase/server";
+import { signInWithGoogle } from "@/app/auth/actions";
 
 export const metadata: Metadata = {
   title: "Forum — Agent World",
@@ -12,7 +14,9 @@ const categories = [
   { name: "Installation Help", description: "Troubleshooting and setup questions" },
 ];
 
-export default function ForumPage() {
+export default async function ForumPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <div className="mb-10">
@@ -24,15 +28,26 @@ export default function ForumPage() {
       </div>
 
       <div className="border border-aw-border rounded-xl p-8 mb-6 text-center">
-        <p className="text-aw-muted mb-4 text-sm">
-          Forum accounts require Google sign-in. Community features are coming soon.
-        </p>
-        <button
-          disabled
-          className="text-sm font-medium bg-aw-surface border border-aw-border text-aw-muted px-5 py-2.5 rounded-lg cursor-not-allowed"
-        >
-          Sign in with Google — coming soon
-        </button>
+        {user ? (
+          <p className="text-aw-muted text-sm">
+            Threaded discussions are coming soon. You&apos;re signed in as{" "}
+            <span className="text-aw-text font-medium">{user.email}</span>.
+          </p>
+        ) : (
+          <>
+            <p className="text-aw-muted mb-4 text-sm">
+              Forum accounts require Google sign-in. Discussions are coming soon.
+            </p>
+            <form action={signInWithGoogle}>
+              <button
+                type="submit"
+                className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+              >
+                Sign in with Google
+              </button>
+            </form>
+          </>
+        )}
       </div>
 
       <div className="divide-y divide-aw-border border border-aw-border rounded-xl overflow-hidden opacity-50">

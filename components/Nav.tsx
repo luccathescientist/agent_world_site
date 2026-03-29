@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import { signInWithGoogle, signOut } from "@/app/auth/actions";
 
 const links = [
   { href: "/install", label: "Install" },
@@ -7,7 +9,10 @@ const links = [
   { href: "/forum", label: "Forum" },
 ];
 
-export default function Nav() {
+export default async function Nav() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
     <nav className="border-b border-aw-border bg-white sticky top-0 z-50">
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
@@ -32,6 +37,33 @@ export default function Nav() {
           >
             GitHub
           </a>
+          {user ? (
+            <div className="flex items-center gap-3">
+              <Link
+                href="/profile"
+                className="text-aw-text font-medium hover:text-aw-muted transition-colors"
+              >
+                {user.user_metadata?.name ?? user.email?.split("@")[0] ?? "Profile"}
+              </Link>
+              <form action={signOut}>
+                <button
+                  type="submit"
+                  className="text-aw-muted hover:text-aw-text transition-colors"
+                >
+                  Sign out
+                </button>
+              </form>
+            </div>
+          ) : (
+            <form action={signInWithGoogle}>
+              <button
+                type="submit"
+                className="text-sm font-medium bg-aw-text text-white px-3 py-1.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+              >
+                Sign in
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </nav>
