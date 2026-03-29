@@ -11,7 +11,10 @@ async function signInWithProvider(provider: "google" | "github") {
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
-    options: { redirectTo: `${origin}/auth/callback` },
+    options: {
+      redirectTo: `${origin}/auth/callback`,
+      scopes: provider === "github" ? "read:user user:email" : undefined,
+    },
   });
 
   if (error || !data.url) redirect("/login?error=auth");
