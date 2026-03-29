@@ -137,11 +137,34 @@ github_url auto-populated for GitHub sign-ins via DB trigger.
 
 ## Release 0.4.0: Worlds showcase
 
-Status: `planned`
+Status: `complete`
 
-Commits:
+### Committed
 
-- none yet
+#### `cb48350` — Add worlds showcase (0.4.0)
+
+Screenshot upload to Supabase Storage, worlds browse page with card grid,
+world detail page with author info; server actions for create and delete.
+
+#### `02c2d06` — Remove game_state.json upload from worlds; note future export plan
+
+Worlds form accepts screenshot only; game_state column deferred until core tool has an export command.
+
+#### `2c2e0fd` — Request read:user scope for GitHub OAuth to get username and avatar
+
+GitHub sign-ins now populate username and avatar (previously only email).
+
+#### `04bfcff` — Fix worlds detail 404 by splitting profiles join into separate query
+
+No FK exists between worlds and profiles; split into two queries to load the author's github_url.
+
+### Shipped state for 0.4.0
+
+- Screenshot upload to Supabase Storage bucket `world-screenshots`
+- Browse page (`/worlds`) with card grid showing title, description, screenshot, author
+- Detail page (`/worlds/[id]`) with full screenshot, author GitHub handle, delete for owner
+- `worlds` table with title, description, screenshot_url, user_id, game_state (unused)
+- Middleware guards `/worlds/new` (requires auth)
 
 ---
 
