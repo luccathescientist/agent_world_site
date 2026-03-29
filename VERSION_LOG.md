@@ -193,6 +193,26 @@ inline edit/delete for own content; RLS-protected threads + replies tables.
 
 ---
 
+## Release 0.5.1: Forum polish
+
+Status: `complete`
+
+### Committed
+
+#### `2815332` — Forum polish (0.5.1): avatars, user dropdown, profile activity, sort, cheatsheet, favicon
+
+### Shipped state for 0.5.1
+
+- Favicon: pixel-art character SVG (`app/icon.svg`)
+- Nav: pixel character logo next to wordmark; `UserMenu` client dropdown (avatar + name → Profile / Sign out)
+- `Avatar` component: derives from `github_url.png?size=80`; letter fallback for non-GitHub users
+- Thread detail: avatar thumbnails next to author names and reply authors
+- Profile page: "Your threads" and "Your replies" sections with jump links to `#reply-UUID`; avatar from GitHub or auth metadata
+- MarkdownEditor: collapsible Markdown reference cheatsheet (uses `<details>`)
+- Forum category page: sorted by `last_reply_at` (threads with recent replies float to top); `last_reply_at` column + trigger added to DB
+
+---
+
 ## Release 0.6.0: Asset library
 
 Status: `planned` (deferred — requires plugin/sharing format in core tool)
