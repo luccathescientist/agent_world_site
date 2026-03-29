@@ -1,22 +1,30 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import { CATEGORIES } from "@/lib/forum";
 
 export const metadata: Metadata = {
   title: "Forum — Agent World",
 };
 
-const categories = [
-  { name: "General", description: "Discussion about Agent World" },
-  { name: "Show & Tell", description: "Share your office layouts and setups" },
-  { name: "Sprites & Assets", description: "Custom sprites, tilesets, and configs" },
-  { name: "Feature Requests", description: "Ideas for what to build next" },
-  { name: "Installation Help", description: "Troubleshooting and setup questions" },
-];
-
 export default async function ForumPage() {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+
+  // Get thread counts and last activity per category
+  const { data: stats } = await supabase
+    .from("threads")
+    .select("category, created_at");
+
+  const categoryStats = Object.fromEntries(
+    CATEGORIES.map((cat) => {
+      const threads = stats?.filter((t) => t.category === cat.slug) ?? [];
+      const last = [...threads].sort((a, b) =>
+        b.created_at.localeCompare(a.created_at)
+      )[0];
+      return [cat.slug, { count: threads.length, lastAt: last?.created_at ?? null }];
+    })
+  );
+
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <div className="mb-10">
@@ -27,36 +35,37 @@ export default async function ForumPage() {
         </p>
       </div>
 
-      <div className="border border-aw-border rounded-xl p-8 mb-6 text-center">
-        {user ? (
-          <p className="text-aw-muted text-sm">
-            Threaded discussions are coming soon. You&apos;re signed in as{" "}
-            <span className="text-aw-text font-medium">{user.email}</span>.
-          </p>
-        ) : (
-          <>
-            <p className="text-aw-muted mb-4 text-sm">
-              Forum accounts require Google sign-in. Discussions are coming soon.
-            </p>
-            <Link
-              href="/login"
-              className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
-            >
-              Sign in
-            </Link>
-          </>
-        )}
-      </div>
+      <div className="divide-y divide-aw-border border border-aw-border rounded-xl overflow-hidden">
+        {CATEGORIES.map((cat) => {
+          const s = categoryStats[cat.slug];
+          const lastAt = s.lastAt
+            ? new Date(s.lastAt).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              })
+            : null;
 
-      <div className="divide-y divide-aw-border border border-aw-border rounded-xl overflow-hidden opacity-50">
-        {categories.map((cat) => (
-          <div key={cat.name} className="px-5 py-4 flex items-center justify-between">
-            <div>
-              <div className="text-aw-text text-sm font-medium">{cat.name}</div>
-              <div className="text-aw-muted text-xs mt-0.5">{cat.description}</div>
-            </div>
-          </div>
-        ))}
+          return (
+            <Link
+              key={cat.slug}
+              href={`/forum/${cat.slug}`}
+              className="px-5 py-4 flex items-center justify-between hover:bg-aw-surface transition-colors group"
+            >
+              <div>
+                <div className="text-aw-text text-sm font-medium group-hover:underline underline-offset-2">
+                  {cat.name}
+                </div>
+                <div className="text-aw-muted text-xs mt-0.5">{cat.description}</div>
+              </div>
+              <div className="text-right ml-6 shrink-0">
+                <div className="text-aw-text text-sm font-medium">{s.count}</div>
+                <div className="text-aw-muted text-xs">
+                  {lastAt ? `last ${lastAt}` : "no posts yet"}
+                </div>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
