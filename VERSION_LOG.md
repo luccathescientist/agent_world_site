@@ -170,11 +170,26 @@ No FK exists between worlds and profiles; split into two queries to load the aut
 
 ## Release 0.5.0: Forum
 
-Status: `planned`
+Status: `complete`
 
-Commits:
+### Committed
 
-- none yet
+#### `3403647` — Add forum (0.5.0): threaded discussions with markdown and quoting
+
+Category index, thread list, new thread form, thread detail with flat replies;
+markdown editor with write/preview toggle; quote button pre-fills reply composer;
+inline edit/delete for own content; RLS-protected threads + replies tables.
+
+### Shipped state for 0.5.0
+
+- `/forum` — category index (General, Show & Tell, Sprites & Assets, Feature Requests, Tech Talk) with thread counts
+- `/forum/[category]` — thread list with reply counts and previews
+- `/forum/[category]/new` — new thread form (auth required)
+- `/forum/[category]/[id]` — thread detail: flat replies, markdown rendering, quote, inline edit, delete
+- Markdown editor with write/preview toggle; GFM (tables, strikethrough) via remark-gfm
+- Quote button pre-fills composer with attributed blockquote (`> @user wrote:`)
+- Author display: GitHub handle if set, else short user ID
+- `threads` + `replies` tables in Supabase with full RLS
 
 ---
 
