@@ -213,6 +213,25 @@ Status: `complete`
 
 ---
 
+## Release 0.5.2: Forum search and polish
+
+Status: `complete`
+
+### Committed
+
+#### `b52c982` — Forum search and polish (0.5.2): search, syntax highlighting, jump-to-last, new badge
+
+### Shipped state for 0.5.2
+
+- `/forum/search`: searches thread titles/bodies and reply bodies; category labels on results
+- Forum index: search bar redirects to `/forum/search`
+- Code syntax highlighting via `rehype-highlight` + highlight.js GitHub theme
+- Thread list: "New" badge on threads with activity since last visit (localStorage per browser)
+- Thread list: "last →" jump link scrolls to the most recent reply anchor
+- DB: `pg_trgm` GIN indexes on `threads.title`, `threads.body`, `replies.body` for fast `ilike` search
+
+---
+
 ## Release 0.6.0: Asset library
 
 Status: `planned` (deferred — requires plugin/sharing format in core tool)

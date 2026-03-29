@@ -83,5 +83,6 @@ Always update `VERSION_LOG.md` when making commits. Check `QUESTIONS.md` before 
 - **0.4.0** ✓ Worlds showcase (screenshot upload, browse, detail)
 - **0.5.0** Forum ✓
 - **0.5.1** Forum polish ✓
+- **0.5.2** Forum search & polish ✓
 - **0.6.0** Asset library (deferred — needs plugin format in core tool)
 - **0.7.0** Enrichment
