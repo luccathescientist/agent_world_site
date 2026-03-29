@@ -8,19 +8,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Agent World palette — deep blues + gold from styles.css
-        "aw-bg": "#0d1b2a",
-        "aw-surface": "#1a2d42",
-        "aw-border": "#2a4060",
-        "aw-gold": "#f0c040",
-        "aw-gold-dim": "#c09830",
-        "aw-text": "#c8d8e8",
-        "aw-muted": "#6080a0",
-        "aw-green": "#40c080",
-        "aw-red": "#c04040",
-      },
-      fontFamily: {
-        mono: ["'Courier New'", "Courier", "monospace"],
+        "aw-bg": "#ffffff",
+        "aw-surface": "#f9fafb",
+        "aw-border": "#e5e7eb",
+        "aw-text": "#111827",
+        "aw-muted": "#6b7280",
+        "aw-accent": "#111827",
+        "aw-accent-hover": "#374151",
+        "aw-green": "#16a34a",
+        "aw-red": "#dc2626",
+        "aw-code-bg": "#f3f4f6",
+        "aw-code-text": "#111827",
       },
     },
   },
