@@ -32,7 +32,7 @@ Next.js 15 App Router, fully server-rendered. All pages are dynamic (no static g
 - `app/auth/actions.ts` — `signInWithGoogle` and `signOut` server actions
 - `app/auth/callback/route.ts` — OAuth redirect handler; exchanges code for session
 
-Sign-in is Google OAuth only. The Supabase project is `nxrjilwzyzblnqyyelsn.supabase.co`.
+Sign-in supports Google and GitHub OAuth. `/login` page offers both. The Supabase project is `nxrjilwzyzblnqyyelsn.supabase.co`.
 
 ### Data
 
@@ -41,6 +41,7 @@ Supabase PostgreSQL. Current tables:
 | Table | Purpose |
 |-------|---------|
 | `worlds` | Community-shared world screenshots (title, description, screenshot_url, user_id) |
+| `profiles` | Extends auth.users — stores `github_url`; auto-created by DB trigger on sign-up |
 
 `game_state` column exists on `worlds` but is not used yet — deferred until the core `agent_world` tool has a proper export command.
 

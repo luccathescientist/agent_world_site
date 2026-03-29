@@ -116,14 +116,22 @@ Improved callback error logging to surface the exact Supabase error reason in th
 
 Documented the Supabase project URL in the env example file.
 
+#### `357a332` — Add GitHub OAuth, /login page, and profile GitHub URL
+
+Added GitHub as a second OAuth provider; /login page with GitHub + Google buttons;
+profile page with editable github_url; world detail shows author's GitHub handle;
+github_url auto-populated for GitHub sign-ins via DB trigger.
+
 ### Shipped state for 0.3.0
 
 - Supabase project connected (nxrjilwzyzblnqyyelsn.supabase.co)
-- Google OAuth working end-to-end on agent-world.dev
-- Nav shows Sign in / user name + Sign out based on session
-- /profile page live with avatar, name, email, join date
+- Google and GitHub OAuth working end-to-end on agent-world.dev
+- /login page with both providers (GitHub primary)
+- Nav "Sign in" links to /login
+- /profile page with avatar, name, provider, join date, editable github_url
+- profiles table with auto-trigger for GitHub username on sign-up
+- World detail shows author's @github handle
 - Middleware guards /profile and refreshes sessions
-- Local dev auth supported via localhost:3000/auth/callback
 
 ---
 
