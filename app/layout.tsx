@@ -6,6 +6,30 @@ export const metadata: Metadata = {
   title: "Agent World",
   description:
     "A browser UI that renders your AI agents as characters in a living, 16-bit office world.",
+  metadataBase: new URL("https://boya.dev"),
+  openGraph: {
+    title: "Agent World",
+    description:
+      "A browser UI that renders your AI agents as characters in a living, 16-bit office world.",
+    url: "https://boya.dev",
+    siteName: "Agent World",
+    images: [
+      {
+        url: "/media/agent_world_canvas.png",
+        width: 710,
+        height: 470,
+        alt: "Agent World — the 16-bit office",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Agent World",
+    description:
+      "A browser UI that renders your AI agents as characters in a living, 16-bit office world.",
+    images: ["/media/agent_world_canvas.png"],
+  },
 };
 
 export default function RootLayout({

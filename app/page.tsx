@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const features = [
   {
@@ -53,7 +54,7 @@ export default function Home() {
         {/* Install command */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
           <div className="bg-aw-surface border border-aw-border rounded px-5 py-3 text-sm text-aw-green font-mono select-all">
-            curl -fsSL https://agentworld.dev/install.sh | sh
+            curl -fsSL https://boya.dev/install.sh | sh
           </div>
           <Link
             href="/install"
@@ -65,12 +66,19 @@ export default function Home() {
         <p className="text-aw-muted text-xs">Requires Python 3.10+ and OpenClaw</p>
       </section>
 
-      {/* World preview placeholder */}
+      {/* World preview */}
       <section className="mb-24">
-        <div className="border border-aw-border bg-aw-surface rounded-lg aspect-video flex items-center justify-center text-aw-muted text-sm">
-          {/* Replace with an actual screenshot or GIF of the world renderer */}
-          <span>[ world preview ]</span>
+        <div className="border border-aw-border bg-aw-surface rounded-lg overflow-hidden">
+          <img
+            src="/media/agent_world_preview_small.gif"
+            alt="Agent World — Lucca moving through the office in real time"
+            className="w-full"
+            style={{ imageRendering: "pixelated" }}
+          />
         </div>
+        <p className="text-center text-aw-muted text-xs mt-3">
+          Lucca, live — moving between rooms based on what she&apos;s actually doing
+        </p>
       </section>
 
       {/* Features */}
