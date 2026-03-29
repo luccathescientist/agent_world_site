@@ -40,9 +40,9 @@ export default async function CategoryPage({
     supabase.auth.getUser(),
     supabase
       .from("threads")
-      .select("id, title, body, created_at, user_id", { count: "exact" })
+      .select("id, title, body, created_at, last_reply_at, user_id", { count: "exact" })
       .eq("category", cat.slug)
-      .order("created_at", { ascending: false })
+      .order("last_reply_at", { ascending: false })
       .range(from, to),
   ]);
 

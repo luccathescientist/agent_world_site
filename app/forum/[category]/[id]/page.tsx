@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getCategory, type CategorySlug } from "@/lib/forum";
 import { deleteThread, deleteReply } from "@/app/forum/actions";
 import { augmentQuoteMarkers } from "@/lib/forum-display";
+import { Avatar, githubAvatar } from "@/components/Avatar";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { ReplyComposer } from "@/components/ReplyComposer";
 import { QuoteButton } from "@/components/QuoteButton";
@@ -49,10 +50,12 @@ export default async function ThreadPage({
     .in("id", userIds);
 
   const nameMap: Record<string, string> = {};
+  const avatarMap: Record<string, string | null> = {};
   userIds.forEach((uid) => {
     const p = profiles?.find((p) => p.id === uid);
     const gh = p?.github_url?.replace("https://github.com/", "");
     nameMap[uid] = gh ? `@${gh}` : `user_${uid.slice(0, 6)}`;
+    avatarMap[uid] = githubAvatar(p?.github_url ?? null);
   });
 
   // Build set of edited reply IDs for quote augmentation
@@ -76,12 +79,15 @@ export default async function ThreadPage({
 
       {/* Thread */}
       <div className="border border-aw-border rounded-xl p-6 mb-6">
-        <h1 className="text-xl font-bold text-aw-text tracking-tight mb-1">{thread.title}</h1>
-        <div className="text-aw-muted text-xs mb-5">
-          {nameMap[thread.user_id]} · {threadCreatedAt}
-          {thread.updated_at !== thread.created_at && (
-            <span className="ml-2 italic">(edited)</span>
-          )}
+        <h1 className="text-xl font-bold text-aw-text tracking-tight mb-3">{thread.title}</h1>
+        <div className="flex items-center gap-2 mb-5">
+          <Avatar src={avatarMap[thread.user_id]} name={nameMap[thread.user_id]} size={24} />
+          <span className="text-aw-muted text-xs">
+            {nameMap[thread.user_id]} · {threadCreatedAt}
+            {thread.updated_at !== thread.created_at && (
+              <span className="ml-2 italic">(edited)</span>
+            )}
+          </span>
         </div>
         <MarkdownContent body={augmentQuoteMarkers(thread.body, editedIds)} />
 
@@ -118,10 +124,13 @@ export default async function ThreadPage({
             return (
               <div key={reply.id} id={`reply-${reply.id}`} className="border border-aw-border rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-aw-muted text-xs">
-                    {authorName} · {replyDate}
-                    {edited && <span className="ml-2 italic">(edited)</span>}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <Avatar src={avatarMap[reply.user_id]} name={authorName} size={22} />
+                    <span className="text-aw-muted text-xs">
+                      {authorName} · {replyDate}
+                      {edited && <span className="ml-2 italic">(edited)</span>}
+                    </span>
+                  </div>
                   {user && (
                     <QuoteButton replyId={reply.id} authorName={authorName} body={reply.body} />
                   )}

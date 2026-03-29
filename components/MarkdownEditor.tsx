@@ -90,6 +90,24 @@ export function MarkdownEditor({
       )}
       {/* Hidden input ensures value is submitted even when previewing */}
       {preview && <input type="hidden" name={name} value={value} />}
+
+      <details className="mt-2 group">
+        <summary className="text-xs text-aw-muted cursor-pointer hover:text-aw-text transition-colors select-none w-fit">
+          Markdown reference
+        </summary>
+        <div className="mt-2 border border-aw-border rounded-lg p-3 grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-xs text-aw-muted">
+          <span>**bold**</span>        <span className="font-sans font-bold not-italic">bold</span>
+          <span>*italic*</span>        <span className="font-sans italic">italic</span>
+          <span>`code`</span>          <span className="font-sans bg-aw-surface px-1 rounded not-italic">code</span>
+          <span>## Heading</span>      <span className="font-sans font-bold not-italic">heading</span>
+          <span>[text](url)</span>     <span className="font-sans underline not-italic">link</span>
+          <span>![alt](url)</span>     <span className="font-sans not-italic">image</span>
+          <span>&gt; quote</span>      <span className="font-sans border-l-2 border-aw-border pl-1 not-italic">quote</span>
+          <span>- item</span>          <span className="font-sans not-italic">• list item</span>
+          <span>1. item</span>         <span className="font-sans not-italic">1. numbered</span>
+          <span>```lang</span>         <span className="font-sans not-italic">code block</span>
+        </div>
+      </details>
     </div>
   );
 }
