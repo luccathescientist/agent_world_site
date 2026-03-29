@@ -82,22 +82,6 @@ export default async function NewWorldPage({
           <p className="text-aw-muted text-xs mt-1.5">PNG, JPG, GIF or WebP. Take a screenshot of your world canvas.</p>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-aw-text mb-1.5" htmlFor="game_state">
-            game_state.json
-          </label>
-          <input
-            id="game_state"
-            name="game_state"
-            type="file"
-            accept=".json,application/json"
-            className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-muted bg-white file:mr-3 file:border-0 file:bg-aw-surface file:text-aw-text file:text-xs file:font-medium file:px-3 file:py-1 file:rounded file:cursor-pointer"
-          />
-          <p className="text-aw-muted text-xs mt-1.5">
-            Found at <code className="text-aw-code-text bg-aw-code-bg px-1 rounded">assets/tiles/office_world/game_state.json</code> in your Agent World directory.
-          </p>
-        </div>
-
         <div className="flex gap-3 pt-2">
           <button
             type="submit"

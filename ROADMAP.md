@@ -63,11 +63,15 @@ Goal: lay the infrastructure for community features.
 
 Goal: let users share their Agent World setups.
 
-- Upload a `game_state.json` + screenshot to share a world
+- Upload a screenshot + title/description to share a world
 - World cards with author, description, and preview image
-- `/worlds` browse page with basic filtering
-- Individual world detail page
-- Optional: lightweight in-browser preview using the PixiJS renderer
+- `/worlds` browse page
+- Individual world detail page with delete for owner
+
+Note: `game_state.json` upload is deferred. A proper world export will eventually
+need to bundle the tilemap, room mapping, sprite atlases, and chat bubble config
+so other users can fully render and animate the world. This requires an export
+command in the core `agent_world` tool first.
 
 ---
 

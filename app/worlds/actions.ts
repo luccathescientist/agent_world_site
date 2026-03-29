@@ -12,7 +12,6 @@ export async function createWorld(formData: FormData) {
   const title = formData.get("title") as string;
   const description = formData.get("description") as string | null;
   const screenshotFile = formData.get("screenshot") as File | null;
-  const gameStateFile = formData.get("game_state") as File | null;
 
   if (!title?.trim()) {
     redirect("/worlds/new?error=title_required");
@@ -35,17 +34,6 @@ export async function createWorld(formData: FormData) {
     }
   }
 
-  // Parse game_state JSON
-  let gameState: Record<string, unknown> | null = null;
-  if (gameStateFile && gameStateFile.size > 0) {
-    try {
-      const text = await gameStateFile.text();
-      gameState = JSON.parse(text);
-    } catch {
-      redirect("/worlds/new?error=invalid_json");
-    }
-  }
-
   const { data, error } = await supabase
     .from("worlds")
     .insert({
@@ -53,7 +41,6 @@ export async function createWorld(formData: FormData) {
       title: title.trim(),
       description: description?.trim() || null,
       screenshot_url: screenshotUrl,
-      game_state: gameState,
     })
     .select("id")
     .single();

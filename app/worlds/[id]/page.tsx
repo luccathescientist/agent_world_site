@@ -69,15 +69,6 @@ export default async function WorldDetailPage({
       </div>
 
       <div className="flex gap-3">
-        {w.game_state && (
-          <a
-            href={`data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(w.game_state, null, 2))}`}
-            download="game_state.json"
-            className="text-sm font-medium border border-aw-border text-aw-text px-4 py-2.5 rounded-lg hover:bg-aw-surface transition-colors"
-          >
-            Download game_state.json
-          </a>
-        )}
         {isOwner && (
           <form action={deleteWorld.bind(null, w.id)}>
             <button
