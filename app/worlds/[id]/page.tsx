@@ -26,17 +26,20 @@ export default async function WorldDetailPage({
 
   const { data: world } = await supabase
     .from("worlds")
-    .select("*, profiles(github_url)")
+    .select("*")
     .eq("id", id)
     .single();
 
   if (!world) notFound();
 
-  const { data: { user } } = await supabase.auth.getUser();
-  const isOwner = user?.id === (world as World).user_id;
+  const [{ data: { user } }, { data: profile }] = await Promise.all([
+    supabase.auth.getUser(),
+    supabase.from("profiles").select("github_url").eq("id", world.user_id).single(),
+  ]);
 
-  const w = world as World & { profiles: { github_url: string | null } | null };
-  const githubUrl = w.profiles?.github_url ?? null;
+  const isOwner = user?.id === (world as World).user_id;
+  const w = world as World;
+  const githubUrl = profile?.github_url ?? null;
   const createdAt = new Date(w.created_at).toLocaleDateString("en-US", {
     year: "numeric", month: "long", day: "numeric",
   });
