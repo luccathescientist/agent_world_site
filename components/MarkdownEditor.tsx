@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { MarkdownContent } from "./MarkdownContent";
+import { ImageUploadButton } from "./ImageUploadButton";
 
 export function MarkdownEditor({
   name,
@@ -18,10 +19,28 @@ export function MarkdownEditor({
 }) {
   const [value, setValue] = useState(defaultValue);
   const [preview, setPreview] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  function insertAtCursor(text: string) {
+    const el = textareaRef.current;
+    if (!el) {
+      setValue((v) => v + text);
+      return;
+    }
+    const start = el.selectionStart ?? value.length;
+    const end = el.selectionEnd ?? value.length;
+    const next = value.slice(0, start) + text + value.slice(end);
+    setValue(next);
+    // Restore cursor after the inserted text
+    requestAnimationFrame(() => {
+      el.focus();
+      el.setSelectionRange(start + text.length, start + text.length);
+    });
+  }
 
   return (
     <div>
-      <div className="flex gap-3 mb-2">
+      <div className="flex gap-2 mb-2">
         <button
           type="button"
           onClick={() => setPreview(false)}
@@ -44,6 +63,9 @@ export function MarkdownEditor({
         >
           Preview
         </button>
+        {!preview && (
+          <ImageUploadButton onInsert={(md) => insertAtCursor(md)} />
+        )}
       </div>
 
       {preview ? (
@@ -56,6 +78,7 @@ export function MarkdownEditor({
         </div>
       ) : (
         <textarea
+          ref={textareaRef}
           name={name}
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -65,7 +88,7 @@ export function MarkdownEditor({
           className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-white placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors resize-y font-mono"
         />
       )}
-      {/* Hidden input so the value is always submitted even when previewing */}
+      {/* Hidden input ensures value is submitted even when previewing */}
       {preview && <input type="hidden" name={name} value={value} />}
     </div>
   );

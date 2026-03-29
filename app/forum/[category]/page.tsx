@@ -3,6 +3,9 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCategory } from "@/lib/forum";
+import { Pagination } from "@/components/Pagination";
+
+const PAGE_SIZE = 20;
 
 export async function generateMetadata({
   params,
@@ -16,24 +19,36 @@ export async function generateMetadata({
 
 export default async function CategoryPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ category: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const { category } = await params;
+  const [{ category }, { page: pageParam }] = await Promise.all([params, searchParams]);
   const cat = getCategory(category);
   if (!cat) notFound();
 
+  const page = Math.max(1, parseInt(pageParam ?? "1", 10) || 1);
+  const from = (page - 1) * PAGE_SIZE;
+  const to = from + PAGE_SIZE - 1;
+
   const supabase = await createClient();
-  const [{ data: { user } }, { data: threads }] = await Promise.all([
+  const [
+    { data: { user } },
+    { data: threads, count },
+  ] = await Promise.all([
     supabase.auth.getUser(),
     supabase
       .from("threads")
-      .select("id, title, body, created_at, updated_at, user_id")
+      .select("id, title, body, created_at, user_id", { count: "exact" })
       .eq("category", cat.slug)
-      .order("created_at", { ascending: false }),
+      .order("created_at", { ascending: false })
+      .range(from, to),
   ]);
 
-  // Fetch reply counts
+  const total = count ?? 0;
+
+  // Fetch reply counts for this page's threads
   const threadIds = threads?.map((t) => t.id) ?? [];
   const { data: replyCounts } = threadIds.length
     ? await supabase
@@ -82,35 +97,43 @@ export default async function CategoryPage({
           <p className="text-aw-muted text-sm">No threads yet. Be the first to post.</p>
         </div>
       ) : (
-        <div className="divide-y divide-aw-border border border-aw-border rounded-xl overflow-hidden">
-          {threads.map((thread) => {
-            const date = new Date(thread.created_at).toLocaleDateString("en-US", {
-              month: "short", day: "numeric", year: "numeric",
-            });
-            const replies = countMap[thread.id] ?? 0;
-            const preview = thread.body.replace(/[#*`>_~\[\]]/g, "").slice(0, 120);
+        <>
+          <div className="divide-y divide-aw-border border border-aw-border rounded-xl overflow-hidden">
+            {threads.map((thread) => {
+              const date = new Date(thread.created_at).toLocaleDateString("en-US", {
+                month: "short", day: "numeric", year: "numeric",
+              });
+              const replies = countMap[thread.id] ?? 0;
+              const preview = thread.body.replace(/[#*`>_~\[\]!]/g, "").slice(0, 120);
 
-            return (
-              <Link
-                key={thread.id}
-                href={`/forum/${cat.slug}/${thread.id}`}
-                className="px-5 py-4 flex items-start justify-between hover:bg-aw-surface transition-colors group"
-              >
-                <div className="min-w-0">
-                  <div className="text-aw-text text-sm font-medium group-hover:underline underline-offset-2 truncate">
-                    {thread.title}
+              return (
+                <Link
+                  key={thread.id}
+                  href={`/forum/${cat.slug}/${thread.id}`}
+                  className="px-5 py-4 flex items-start justify-between hover:bg-aw-surface transition-colors group"
+                >
+                  <div className="min-w-0">
+                    <div className="text-aw-text text-sm font-medium group-hover:underline underline-offset-2 truncate">
+                      {thread.title}
+                    </div>
+                    <div className="text-aw-muted text-xs mt-0.5 truncate">{preview}</div>
+                    <div className="text-aw-muted text-xs mt-1">{date}</div>
                   </div>
-                  <div className="text-aw-muted text-xs mt-0.5 truncate">{preview}</div>
-                  <div className="text-aw-muted text-xs mt-1">{date}</div>
-                </div>
-                <div className="ml-6 shrink-0 text-right">
-                  <div className="text-aw-text text-sm font-medium">{replies}</div>
-                  <div className="text-aw-muted text-xs">{replies === 1 ? "reply" : "replies"}</div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+                  <div className="ml-6 shrink-0 text-right">
+                    <div className="text-aw-text text-sm font-medium">{replies}</div>
+                    <div className="text-aw-muted text-xs">{replies === 1 ? "reply" : "replies"}</div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+          <Pagination
+            page={page}
+            total={total}
+            pageSize={PAGE_SIZE}
+            basePath={`/forum/${cat.slug}`}
+          />
+        </>
       )}
     </div>
   );
