@@ -26,7 +26,7 @@ export default async function WorldDetailPage({
 
   const { data: world } = await supabase
     .from("worlds")
-    .select("*")
+    .select("*, profiles(github_url)")
     .eq("id", id)
     .single();
 
@@ -35,7 +35,8 @@ export default async function WorldDetailPage({
   const { data: { user } } = await supabase.auth.getUser();
   const isOwner = user?.id === (world as World).user_id;
 
-  const w = world as World;
+  const w = world as World & { profiles: { github_url: string | null } | null };
+  const githubUrl = w.profiles?.github_url ?? null;
   const createdAt = new Date(w.created_at).toLocaleDateString("en-US", {
     year: "numeric", month: "long", day: "numeric",
   });
@@ -65,7 +66,19 @@ export default async function WorldDetailPage({
         {w.description && (
           <p className="text-aw-muted leading-relaxed">{w.description}</p>
         )}
-        <div className="text-aw-muted text-xs mt-3">Shared {createdAt}</div>
+        <div className="flex items-center gap-4 mt-3">
+          <span className="text-aw-muted text-xs">Shared {createdAt}</span>
+          {githubUrl && (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-aw-muted hover:text-aw-text transition-colors underline underline-offset-2"
+            >
+              {githubUrl.replace("https://github.com/", "@")}
+            </a>
+          )}
+        </div>
       </div>
 
       <div className="flex gap-3">

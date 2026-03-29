@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { signInWithGoogle, signOut } from "@/app/auth/actions";
+import { signOut } from "@/app/auth/actions";
 
 const links = [
   { href: "/install", label: "Install" },
@@ -55,14 +55,12 @@ export default async function Nav() {
               </form>
             </div>
           ) : (
-            <form action={signInWithGoogle}>
-              <button
-                type="submit"
-                className="text-sm font-medium bg-aw-text text-white px-3 py-1.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
-              >
-                Sign in
-              </button>
-            </form>
+            <Link
+              href="/login"
+              className="text-sm font-medium bg-aw-text text-white px-3 py-1.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+            >
+              Sign in
+            </Link>
           )}
         </div>
       </div>

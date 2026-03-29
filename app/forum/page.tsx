@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
-import { signInWithGoogle } from "@/app/auth/actions";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Forum — Agent World",
@@ -38,14 +38,12 @@ export default async function ForumPage() {
             <p className="text-aw-muted mb-4 text-sm">
               Forum accounts require Google sign-in. Discussions are coming soon.
             </p>
-            <form action={signInWithGoogle}>
-              <button
-                type="submit"
-                className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
-              >
-                Sign in with Google
-              </button>
-            </form>
+            <Link
+              href="/login"
+              className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+            >
+              Sign in
+            </Link>
           </>
         )}
       </div>
