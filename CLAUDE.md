@@ -81,6 +81,6 @@ Always update `VERSION_LOG.md` when making commits. Check `QUESTIONS.md` before 
 - **0.2.0** ✓ Content, media, agent-world.dev domain
 - **0.3.0** ✓ Google OAuth + profiles
 - **0.4.0** ✓ Worlds showcase (screenshot upload, browse, detail)
-- **0.5.0** Asset library — next
-- **0.6.0** Forum
+- **0.5.0** Forum — next
+- **0.6.0** Asset library (deferred — needs plugin format in core tool)
 - **0.7.0** Enrichment

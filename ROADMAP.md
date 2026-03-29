@@ -75,18 +75,7 @@ command in the core `agent_world` tool first.
 
 ---
 
-### Site 0.5.0 — Community: asset library
-
-Goal: sprite and config sharing.
-
-- Upload sprite atlases, tilesets, and config snippets
-- Asset cards with type badge (sprite / tilemap / config)
-- Version tag ("requires Agent World 0.4.0+")
-- Download button
-
----
-
-### Site 0.6.0 — Forum
+### Site 0.5.0 — Forum
 
 Goal: threaded discussion for the community.
 
@@ -95,6 +84,20 @@ Goal: threaded discussion for the community.
 - Thread list and thread detail pages
 - Reply composer (authenticated)
 - Basic moderation: flag / hide posts
+
+---
+
+### Site 0.6.0 — Community: asset library
+
+Goal: sprite and config sharing. Deferred until the core `agent_world` tool has
+a defined plugin/sharing format for bundling visual assets (tilesets, sprite
+atlases, room configs). In the meantime, users can link their GitHub repos from
+their profile.
+
+- Link to or upload sprite atlases, tilesets, and config snippets
+- Asset cards with type badge (sprite / tilemap / config)
+- Version tag ("requires Agent World 0.4.0+")
+- Download or GitHub link button
 
 ---
 

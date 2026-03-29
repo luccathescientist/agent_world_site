@@ -168,7 +168,7 @@ No FK exists between worlds and profiles; split into two queries to load the aut
 
 ---
 
-## Release 0.5.0: Asset library
+## Release 0.5.0: Forum
 
 Status: `planned`
 
@@ -178,9 +178,9 @@ Commits:
 
 ---
 
-## Release 0.6.0: Forum
+## Release 0.6.0: Asset library
 
-Status: `planned`
+Status: `planned` (deferred — requires plugin/sharing format in core tool)
 
 Commits:
 
