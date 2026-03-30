@@ -27,16 +27,21 @@ export default async function Nav() {
   const { data: { user } } = await supabase.auth.getUser();
 
   let avatarSrc: string | null = null;
+  let unreadMessages = 0;
   if (user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("github_url")
-      .eq("id", user.id)
-      .single();
+    const [{ data: profile }, { count }] = await Promise.all([
+      supabase.from("profiles").select("github_url").eq("id", user.id).single(),
+      supabase
+        .from("direct_messages")
+        .select("id", { count: "exact", head: true })
+        .eq("recipient_id", user.id)
+        .is("read_at", null),
+    ]);
     avatarSrc =
       githubAvatar(profile?.github_url) ??
       (user.user_metadata?.avatar_url as string | null) ??
       null;
+    unreadMessages = count ?? 0;
   }
 
   const name =
@@ -63,7 +68,17 @@ export default async function Nav() {
             </Link>
           ))}
           {user ? (
-            <UserMenu name={name} avatarSrc={avatarSrc} />
+            <>
+              <Link href="/messages" className="relative hover:text-aw-text transition-colors">
+                Messages
+                {unreadMessages > 0 && (
+                  <span className="absolute -top-1.5 -right-3 text-[10px] font-bold bg-aw-text text-white rounded-full w-4 h-4 flex items-center justify-center leading-none">
+                    {unreadMessages > 9 ? "9+" : unreadMessages}
+                  </span>
+                )}
+              </Link>
+              <UserMenu name={name} avatarSrc={avatarSrc} />
+            </>
           ) : (
             <Link
               href="/login"

@@ -19,6 +19,20 @@ Conventions:
 
 ---
 
+## Release 0.8.0: Messaging, email notifications, and analytics
+
+Status: `in progress`
+
+Goal: admin email notifications on key events, Google Analytics tracking, and a private messaging system between users.
+
+### In Progress
+
+- Google Analytics 4 via `NEXT_PUBLIC_GA_MEASUREMENT_ID` env var; script injected in root layout with `afterInteractive` strategy
+- Resend email notifications to admin (luccathescientist@gmail.com) on new user sign-up, forum thread creation, forum replies, and new world posts; gated on `RESEND_API_KEY` env var
+- Private messaging: `direct_messages` table, `/messages` inbox, `/messages/[userId]` conversation view, unread badge in Nav, auth protection in middleware
+
+---
+
 ## Release 0.1.0: Static scaffold
 
 Status: `complete`

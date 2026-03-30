@@ -29,10 +29,11 @@ export async function middleware(request: NextRequest) {
   // getUser, otherwise the session cookie may not be refreshed correctly.
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Protect /profile, /worlds/new, and /forum/[category]/new
+  // Protect /profile, /worlds/new, /forum/[category]/new, and /messages
   if (!user && (
     request.nextUrl.pathname.startsWith("/profile") ||
     request.nextUrl.pathname.startsWith("/worlds/new") ||
+    request.nextUrl.pathname.startsWith("/messages") ||
     /^\/forum\/[^/]+\/new$/.test(request.nextUrl.pathname)
   )) {
     const url = request.nextUrl.clone();

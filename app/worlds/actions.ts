@@ -50,6 +50,12 @@ export async function createWorld(formData: FormData) {
     redirect("/worlds/new?error=save_failed");
   }
 
+  const { data: profile } = await supabase.from("profiles").select("github_url").eq("id", user.id).single();
+  const gh = profile?.github_url?.replace("https://github.com/", "");
+  const authorName = gh ? `@${gh}` : (user.email?.split("@")[0] ?? "someone");
+  const { notifyNewWorld } = await import("@/lib/email");
+  await notifyNewWorld(title.trim(), data.id, authorName);
+
   redirect(`/worlds/${data.id}`);
 }
 

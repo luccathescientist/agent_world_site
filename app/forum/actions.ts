@@ -24,6 +24,12 @@ export async function createThread(formData: FormData) {
 
   if (error || !data) return;
 
+  const { data: profile } = await supabase.from("profiles").select("github_url").eq("id", user.id).single();
+  const gh = profile?.github_url?.replace("https://github.com/", "");
+  const authorName = gh ? `@${gh}` : (user.email?.split("@")[0] ?? "someone");
+  const { notifyNewThread } = await import("@/lib/email");
+  await notifyNewThread(title, category, data.id, authorName);
+
   redirect(`/forum/${category}/${data.id}`);
 }
 
@@ -77,6 +83,17 @@ export async function createReply(threadId: string, category: CategorySlug, form
   await supabase
     .from("replies")
     .insert({ thread_id: threadId, user_id: user.id, body });
+
+  const [{ data: profile }, { data: thread }] = await Promise.all([
+    supabase.from("profiles").select("github_url").eq("id", user.id).single(),
+    supabase.from("threads").select("title").eq("id", threadId).single(),
+  ]);
+  const gh = profile?.github_url?.replace("https://github.com/", "");
+  const authorName = gh ? `@${gh}` : (user.email?.split("@")[0] ?? "someone");
+  if (thread?.title) {
+    const { notifyNewReply } = await import("@/lib/email");
+    await notifyNewReply(thread.title, category, threadId, authorName);
+  }
 
   revalidatePath(`/forum/${category}/${threadId}`);
 }

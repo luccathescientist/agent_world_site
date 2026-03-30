@@ -8,8 +8,21 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      const user = data.user;
+      if (user) {
+        const isNewUser = Date.now() - new Date(user.created_at).getTime() < 60_000;
+        if (isNewUser) {
+          const { notifyNewUser } = await import("@/lib/email");
+          const name =
+            (user.user_metadata?.name as string | undefined) ??
+            (user.user_metadata?.user_name as string | undefined) ??
+            user.email ??
+            "unknown";
+          await notifyNewUser(user.email ?? "unknown", name);
+        }
+      }
       return NextResponse.redirect(`${origin}${next}`);
     }
     console.error("[auth/callback] exchangeCodeForSession error:", error.message);
