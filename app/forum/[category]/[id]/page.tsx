@@ -11,6 +11,7 @@ import { ReplyComposer } from "@/components/ReplyComposer";
 import { QuoteButton } from "@/components/QuoteButton";
 import { InlineEditThread, InlineEditReply } from "@/components/InlineEdit";
 import { DeleteButton } from "@/components/DeleteButton";
+import { VoteButton } from "@/components/VoteButton";
 
 export async function generateMetadata({
   params,
@@ -34,10 +35,11 @@ export default async function ThreadPage({
 
   const supabase = await createClient();
 
-  const [{ data: thread }, { data: replies }, { data: { user } }] = await Promise.all([
+  const [{ data: thread }, { data: replies }, { data: { user } }, { count: voteCount }] = await Promise.all([
     supabase.from("threads").select("*").eq("id", id).eq("category", cat.slug).single(),
     supabase.from("replies").select("*").eq("thread_id", id).order("created_at", { ascending: true }),
     supabase.auth.getUser(),
+    supabase.from("votes").select("*", { count: "exact", head: true }).eq("target_id", id).eq("target_type", "thread"),
   ]);
 
   if (!thread) notFound();
@@ -62,6 +64,19 @@ export default async function ThreadPage({
   const editedIds = new Set(
     replies?.filter((r) => r.updated_at !== r.created_at).map((r) => r.id) ?? []
   );
+
+  // Check if current user voted on the thread
+  let userVotedThread = false;
+  if (user) {
+    const { data: myVote } = await supabase
+      .from("votes")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .eq("target_id", id)
+      .eq("target_type", "thread")
+      .single();
+    userVotedThread = !!myVote;
+  }
 
   const replyCount = replies?.length ?? 0;
   const isThreadOwner = user?.id === thread.user_id;
@@ -91,23 +106,32 @@ export default async function ThreadPage({
         </div>
         <MarkdownContent body={augmentQuoteMarkers(thread.body, editedIds)} />
 
-        {isThreadOwner && (
-          <div className="flex gap-3 mt-5 pt-4 border-t border-aw-border items-center">
-            <InlineEditThread
+        <div className="flex gap-3 mt-5 pt-4 border-t border-aw-border items-center">
+          <VoteButton
+            targetId={thread.id}
+            targetType="thread"
+            initialCount={voteCount ?? 0}
+            initialVoted={userVotedThread}
+            isAuthenticated={!!user}
+          />
+          {isThreadOwner && (
+            <>
+              <InlineEditThread
               threadId={thread.id}
               catSlug={cat.slug as CategorySlug}
               title={thread.title}
               body={thread.body}
             />
-            <DeleteButton
-              action={deleteThread.bind(null, thread.id, cat.slug as CategorySlug)}
-              label="Delete thread"
-              confirmMessage="Delete this thread? This cannot be undone."
-              disabled={replyCount > 0}
-              disabledTitle="Remove all replies before deleting this thread"
-            />
-          </div>
-        )}
+              <DeleteButton
+                action={deleteThread.bind(null, thread.id, cat.slug as CategorySlug)}
+                label="Delete thread"
+                confirmMessage="Delete this thread? This cannot be undone."
+                disabled={replyCount > 0}
+                disabledTitle="Remove all replies before deleting this thread"
+              />
+            </>
+          )}
+        </div>
       </div>
 
       {/* Replies */}

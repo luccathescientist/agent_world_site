@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { Pagination } from "@/components/Pagination";
 import type { World } from "@/lib/types";
 
+type WorldWithVotes = World & { voteCount: number };
+
 export const metadata: Metadata = {
   title: "Worlds — Agent World",
 };
@@ -34,6 +36,26 @@ export default async function WorldsPage({
   ]);
 
   const total = count ?? 0;
+
+  // Fetch vote counts for visible worlds
+  const worldIds = (worlds ?? []).map((w) => w.id);
+  const { data: voteCounts } = worldIds.length > 0
+    ? await supabase
+        .from("votes")
+        .select("target_id")
+        .eq("target_type", "world")
+        .in("target_id", worldIds)
+    : { data: [] };
+
+  const voteCountMap: Record<string, number> = {};
+  (voteCounts ?? []).forEach((v) => {
+    voteCountMap[v.target_id] = (voteCountMap[v.target_id] ?? 0) + 1;
+  });
+
+  const worldsWithVotes: WorldWithVotes[] = (worlds as World[] ?? []).map((w) => ({
+    ...w,
+    voteCount: voteCountMap[w.id] ?? 0,
+  }));
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-16">
@@ -72,7 +94,7 @@ export default async function WorldsPage({
       ) : (
         <>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {(worlds as World[]).map((world) => (
+            {worldsWithVotes.map((world) => (
               <Link
                 key={world.id}
                 href={`/worlds/${world.id}`}
@@ -98,10 +120,18 @@ export default async function WorldsPage({
                   {world.description && (
                     <div className="text-aw-muted text-xs line-clamp-2">{world.description}</div>
                   )}
-                  <div className="text-aw-muted text-xs mt-3">
-                    {new Date(world.created_at).toLocaleDateString("en-US", {
-                      month: "short", day: "numeric", year: "numeric",
-                    })}
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="text-aw-muted text-xs">
+                      {new Date(world.created_at).toLocaleDateString("en-US", {
+                        month: "short", day: "numeric", year: "numeric",
+                      })}
+                    </div>
+                    {world.voteCount > 0 && (
+                      <div className="text-aw-muted text-xs flex items-center gap-1">
+                        <span>★</span>
+                        <span>{world.voteCount}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </Link>

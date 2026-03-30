@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function createWorld(formData: FormData) {
   const supabase = await createClient();
@@ -59,4 +60,41 @@ export async function deleteWorld(id: string) {
 
   await supabase.from("worlds").delete().eq("id", id).eq("user_id", user.id);
   redirect("/worlds");
+}
+
+export async function addWorldComment(worldId: string, formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const body = (formData.get("body") as string)?.trim();
+  if (!body) return;
+
+  await supabase.from("world_comments").insert({
+    world_id: worldId,
+    user_id: user.id,
+    body,
+  });
+  revalidatePath(`/worlds/${worldId}`);
+}
+
+export async function editWorldComment(commentId: string, worldId: string, formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const body = (formData.get("body") as string)?.trim();
+  if (!body) return;
+
+  await supabase.from("world_comments").update({ body }).eq("id", commentId).eq("user_id", user.id);
+  revalidatePath(`/worlds/${worldId}`);
+}
+
+export async function deleteWorldComment(commentId: string, worldId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  await supabase.from("world_comments").delete().eq("id", commentId).eq("user_id", user.id);
+  revalidatePath(`/worlds/${worldId}`);
 }

@@ -244,8 +244,14 @@ Commits:
 
 ## Release 0.7.0: Enrichment
 
-Status: `planned`
+Status: `in progress`
 
-Commits:
+### In Progress
+
+- Voting (★/☆) on worlds and forum threads via `votes` table; `VoteButton` client component with optimistic updates
+- World comments: `world_comments` table; add/edit/delete with inline edit and avatar display on world detail page
+- Vote counts shown on world cards in the browse grid
+
+### Committed
 
 - none yet
