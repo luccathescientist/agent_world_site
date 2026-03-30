@@ -70,7 +70,7 @@ export default async function WorldsPage({
         {user && (
           <Link
             href="/worlds/new"
-            className="flex-shrink-0 text-sm font-medium bg-aw-text text-white px-4 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+            className="flex-shrink-0 text-sm font-medium bg-aw-text text-aw-bg px-4 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
           >
             Share your world
           </Link>
@@ -83,7 +83,7 @@ export default async function WorldsPage({
           {user ? (
             <Link
               href="/worlds/new"
-              className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+              className="text-sm font-medium bg-aw-text text-aw-bg px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
             >
               Share your world →
             </Link>

@@ -40,7 +40,7 @@ export function VoteButton({
       title={isAuthenticated ? (voted ? "Remove star" : "Star this") : "Sign in to star"}
       className={`flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg border transition-colors disabled:opacity-50 ${
         voted
-          ? "border-aw-text bg-aw-text text-white"
+          ? "border-aw-text bg-aw-text text-aw-bg"
           : "border-aw-border text-aw-muted hover:border-aw-text hover:text-aw-text"
       }`}
     >

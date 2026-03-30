@@ -201,11 +201,11 @@ export default async function WorldDetailPage({
                 required
                 rows={2}
                 placeholder="Add a comment…"
-                className="w-full border border-aw-border rounded-lg px-3 py-2 text-sm text-aw-text bg-white focus:outline-none focus:border-aw-text transition-colors resize-none"
+                className="w-full border border-aw-border rounded-lg px-3 py-2 text-sm text-aw-text bg-aw-bg focus:outline-none focus:border-aw-text transition-colors resize-none"
               />
               <button
                 type="submit"
-                className="mt-2 text-xs font-medium bg-aw-text text-white px-3 py-1.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+                className="mt-2 text-xs font-medium bg-aw-text text-aw-bg px-3 py-1.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
               >
                 Comment
               </button>

@@ -56,11 +56,11 @@ export default async function ForumSearchPage({
             defaultValue={query}
             placeholder="Search threads and replies…"
             autoFocus
-            className="flex-1 border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-white placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors"
+            className="flex-1 border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-aw-bg placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors"
           />
           <button
             type="submit"
-            className="text-sm font-medium bg-aw-text text-white px-4 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors shrink-0"
+            className="text-sm font-medium bg-aw-text text-aw-bg px-4 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors shrink-0"
           >
             Search
           </button>

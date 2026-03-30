@@ -192,7 +192,7 @@ export default async function ThreadPage({
           <p className="text-aw-muted text-sm mb-4">Sign in to reply.</p>
           <Link
             href="/login"
-            className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+            className="text-sm font-medium bg-aw-text text-aw-bg px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
           >
             Sign in
           </Link>

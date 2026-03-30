@@ -40,6 +40,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Prevent flash of wrong theme */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`,
+          }}
+        />
+      </head>
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
         <>
           <Script
@@ -54,18 +62,35 @@ export default function RootLayout({
       <body className="min-h-screen antialiased">
         <Nav />
         <main>{children}</main>
-        <footer className="border-t border-aw-border mt-24 py-8 text-center text-aw-muted text-sm">
-          <p>
-            Agent World is open source.{" "}
-            <a
-              href="https://github.com/luccathescientist/agent_world"
-              className="text-aw-text underline underline-offset-2 hover:text-aw-muted transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          </p>
+        <footer className="border-t border-aw-border mt-24 py-10 text-center text-aw-muted text-sm">
+          <div className="max-w-5xl mx-auto px-6 flex flex-col items-center gap-4">
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+              <a
+                href="https://github.com/luccathescientist/agent_world"
+                className="hover:text-aw-text transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+              <a
+                href="mailto:hello@agent-world.dev"
+                className="hover:text-aw-text transition-colors"
+              >
+                Contact
+              </a>
+              <a href="/terms" className="hover:text-aw-text transition-colors">
+                Terms of Use
+              </a>
+              <a href="/privacy" className="hover:text-aw-text transition-colors">
+                Privacy Policy
+              </a>
+            </div>
+            <p className="text-xs">
+              © {new Date().getFullYear()} Agent World. Open source under the MIT
+              License.
+            </p>
+          </div>
         </footer>
       </body>
     </html>

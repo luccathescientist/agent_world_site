@@ -23,7 +23,7 @@ function Step({
 }) {
   return (
     <div className="flex gap-5 mb-10">
-      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-aw-text text-white text-xs flex items-center justify-center font-semibold">
+      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-aw-text text-aw-bg text-xs flex items-center justify-center font-semibold">
         {n}
       </div>
       <div className="pt-0.5">

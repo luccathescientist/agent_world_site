@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { UserMenu } from "./UserMenu";
 import { githubAvatar } from "./Avatar";
+import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
   { href: "/install", label: "Install" },
@@ -51,13 +52,14 @@ export default async function Nav() {
     "Profile";
 
   return (
-    <nav className="border-b border-aw-border bg-white sticky top-0 z-50">
+    <nav className="border-b border-aw-border bg-aw-bg sticky top-0 z-50">
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-semibold text-aw-text tracking-tight text-sm">
           <PixelCharIcon />
           Agent World
         </Link>
         <div className="flex items-center gap-6 text-sm text-aw-muted">
+          <ThemeToggle />
           {links.map((l) => (
             <Link
               key={l.href}
@@ -72,7 +74,7 @@ export default async function Nav() {
               <Link href="/messages" className="relative hover:text-aw-text transition-colors">
                 Messages
                 {unreadMessages > 0 && (
-                  <span className="absolute -top-1.5 -right-3 text-[10px] font-bold bg-aw-text text-white rounded-full w-4 h-4 flex items-center justify-center leading-none">
+                  <span className="absolute -top-1.5 -right-3 text-[10px] font-bold bg-aw-text text-aw-bg rounded-full w-4 h-4 flex items-center justify-center leading-none">
                     {unreadMessages > 9 ? "9+" : unreadMessages}
                   </span>
                 )}
@@ -82,7 +84,7 @@ export default async function Nav() {
           ) : (
             <Link
               href="/login"
-              className="text-sm font-medium bg-aw-text text-white px-3 py-1.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+              className="text-sm font-medium bg-aw-text text-aw-bg px-3 py-1.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
             >
               Sign in
             </Link>

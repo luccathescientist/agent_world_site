@@ -44,7 +44,7 @@ export function UserMenu({
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-44 bg-white border border-aw-border rounded-xl shadow-lg overflow-hidden z-50">
+        <div className="absolute right-0 top-full mt-2 w-44 bg-aw-bg border border-aw-border rounded-xl shadow-lg overflow-hidden z-50">
           <Link
             href="/profile"
             onClick={() => setOpen(false)}

@@ -49,7 +49,7 @@ export default async function ForumPage({
             name="q"
             type="search"
             placeholder="Search threads and replies…"
-            className="flex-1 border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-white placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors"
+            className="flex-1 border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-aw-bg placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors"
           />
           <button
             type="submit"

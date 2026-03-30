@@ -82,14 +82,14 @@ export default async function ConversationPage({
                 <div
                   className={`max-w-sm rounded-xl px-4 py-2.5 text-sm ${
                     isMe
-                      ? "bg-aw-text text-white"
+                      ? "bg-aw-text text-aw-bg"
                       : "bg-aw-border/40 text-aw-text border border-aw-border"
                   }`}
                 >
                   <p className="whitespace-pre-wrap break-words">{msg.body}</p>
                   <p
                     className={`text-xs mt-1 ${
-                      isMe ? "text-white/60" : "text-aw-muted"
+                      isMe ? "text-aw-bg/60" : "text-aw-muted"
                     }`}
                   >
                     {date}

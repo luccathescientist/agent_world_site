@@ -51,7 +51,7 @@ export default async function NewWorldPage({
             type="text"
             required
             placeholder="My Agent World"
-            className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-white placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors"
+            className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-aw-bg placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors"
           />
         </div>
 
@@ -64,7 +64,7 @@ export default async function NewWorldPage({
             name="description"
             rows={3}
             placeholder="What's interesting about your setup?"
-            className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-white placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors resize-none"
+            className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-aw-bg placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors resize-none"
           />
         </div>
 
@@ -77,7 +77,7 @@ export default async function NewWorldPage({
             name="screenshot"
             type="file"
             accept="image/png,image/jpeg,image/gif,image/webp"
-            className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-muted bg-white file:mr-3 file:border-0 file:bg-aw-surface file:text-aw-text file:text-xs file:font-medium file:px-3 file:py-1 file:rounded file:cursor-pointer"
+            className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-muted bg-aw-bg file:mr-3 file:border-0 file:bg-aw-surface file:text-aw-text file:text-xs file:font-medium file:px-3 file:py-1 file:rounded file:cursor-pointer"
           />
           <p className="text-aw-muted text-xs mt-1.5">PNG, JPG, GIF or WebP. Take a screenshot of your world canvas.</p>
         </div>
@@ -85,7 +85,7 @@ export default async function NewWorldPage({
         <div className="flex gap-3 pt-2">
           <button
             type="submit"
-            className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+            className="text-sm font-medium bg-aw-text text-aw-bg px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
           >
             Share world
           </button>

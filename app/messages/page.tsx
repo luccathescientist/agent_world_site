@@ -127,7 +127,7 @@ export default async function MessagesPage() {
                   </p>
                 </div>
                 {unreadCount > 0 && (
-                  <span className="shrink-0 text-xs font-medium bg-aw-text text-white rounded-full px-2 py-0.5">
+                  <span className="shrink-0 text-xs font-medium bg-aw-text text-aw-bg rounded-full px-2 py-0.5">
                     {unreadCount}
                   </span>
                 )}

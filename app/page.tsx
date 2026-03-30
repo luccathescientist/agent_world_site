@@ -50,7 +50,7 @@ export default function Home() {
           </div>
           <Link
             href="/install"
-            className="text-sm font-medium bg-aw-text text-white px-5 py-3 rounded-lg hover:bg-aw-accent-hover transition-colors"
+            className="text-sm font-medium bg-aw-text text-aw-bg px-5 py-3 rounded-lg hover:bg-aw-accent-hover transition-colors"
           >
             Installation guide →
           </Link>
@@ -130,7 +130,7 @@ export default function Home() {
         <div className="flex justify-center gap-3">
           <Link
             href="/worlds"
-            className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+            className="text-sm font-medium bg-aw-text text-aw-bg px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
           >
             Browse worlds
           </Link>

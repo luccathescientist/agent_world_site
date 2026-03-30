@@ -18,7 +18,7 @@ export function NewBadge({ lastReplyAt }: { lastReplyAt: string }) {
 
   if (!isNew) return null;
   return (
-    <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-aw-text text-white leading-none">
+    <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-aw-text text-aw-bg leading-none">
       New
     </span>
   );

@@ -2,13 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Light theme (default) ── */
+:root {
+  --aw-bg:           255 255 255;  /* #ffffff */
+  --aw-surface:      249 250 251;  /* #f9fafb */
+  --aw-border:       229 231 235;  /* #e5e7eb */
+  --aw-text:         17 24 39;     /* #111827 */
+  --aw-muted:        107 114 128;  /* #6b7280 */
+  --aw-accent:       17 24 39;     /* #111827 */
+  --aw-accent-hover: 55 65 81;     /* #374151 */
+  --aw-green:        22 163 74;    /* #16a34a */
+  --aw-red:          220 38 38;    /* #dc2626 */
+  --aw-code-bg:      243 244 246;  /* #f3f4f6 */
+  --aw-code-text:    17 24 39;     /* #111827 */
+}
+
+/* ── Dark theme ── */
+[data-theme="dark"] {
+  --aw-bg:           15 23 42;     /* #0f172a slate-900 */
+  --aw-surface:      30 41 59;     /* #1e293b slate-800 */
+  --aw-border:       51 65 85;     /* #334155 slate-700 */
+  --aw-text:         241 245 249;  /* #f1f5f9 slate-100 */
+  --aw-muted:        148 163 184;  /* #94a3b8 slate-400 */
+  --aw-accent:       241 245 249;  /* #f1f5f9 */
+  --aw-accent-hover: 255 255 255;  /* #ffffff */
+  --aw-green:        34 197 94;    /* #22c55e green-500 */
+  --aw-red:          239 68 68;    /* #ef4444 red-500  */
+  --aw-code-bg:      30 41 59;     /* #1e293b slate-800 */
+  --aw-code-text:    226 232 240;  /* #e2e8f0 slate-200 */
+}
+
 html, body {
-  background-color: #ffffff;
-  color: #111827;
+  background-color: rgb(var(--aw-bg));
+  color: rgb(var(--aw-text));
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f9fafb; }
-::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+::-webkit-scrollbar-track { background: rgb(var(--aw-surface)); }
+::-webkit-scrollbar-thumb { background: rgb(var(--aw-border)); border-radius: 3px; }
+
+/* ── Prose dark mode overrides ── */
+[data-theme="dark"] .prose {
+  --tw-prose-body:        rgb(var(--aw-text));
+  --tw-prose-headings:    rgb(var(--aw-text));
+  --tw-prose-bold:        rgb(var(--aw-text));
+  --tw-prose-links:       rgb(var(--aw-text));
+  --tw-prose-code:        rgb(var(--aw-code-text));
+  --tw-prose-pre-bg:      rgb(var(--aw-code-bg));
+  --tw-prose-quotes:      rgb(var(--aw-muted));
+  --tw-prose-quote-borders: rgb(var(--aw-border));
+  --tw-prose-captions:    rgb(var(--aw-muted));
+  --tw-prose-hr:          rgb(var(--aw-border));
+  --tw-prose-bullets:     rgb(var(--aw-muted));
+  --tw-prose-counters:    rgb(var(--aw-muted));
+  --tw-prose-th-borders:  rgb(var(--aw-border));
+  --tw-prose-td-borders:  rgb(var(--aw-border));
+}

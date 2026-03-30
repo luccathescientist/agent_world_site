@@ -39,7 +39,7 @@ export default async function LoginPage({
         <form action={signInWithGitHub}>
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-3 border border-aw-border bg-aw-text text-white text-sm font-medium px-4 py-3 rounded-lg hover:bg-aw-accent-hover transition-colors"
+            className="w-full flex items-center justify-center gap-3 border border-aw-border bg-aw-text text-aw-bg text-sm font-medium px-4 py-3 rounded-lg hover:bg-aw-accent-hover transition-colors"
           >
             <GitHubIcon />
             Continue with GitHub
@@ -49,7 +49,7 @@ export default async function LoginPage({
         <form action={signInWithGoogle}>
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-3 border border-aw-border bg-white text-aw-text text-sm font-medium px-4 py-3 rounded-lg hover:bg-aw-surface transition-colors"
+            className="w-full flex items-center justify-center gap-3 border border-aw-border bg-aw-surface text-aw-text text-sm font-medium px-4 py-3 rounded-lg hover:bg-aw-border transition-colors"
           >
             <GoogleIcon />
             Continue with Google

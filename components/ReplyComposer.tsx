@@ -44,7 +44,7 @@ export function ReplyComposer({
       />
       <button
         type="submit"
-        className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+        className="text-sm font-medium bg-aw-text text-aw-bg px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
       >
         Post reply
       </button>

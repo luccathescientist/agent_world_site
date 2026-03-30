@@ -46,7 +46,7 @@ export function MarkdownEditor({
           onClick={() => setPreview(false)}
           className={`text-xs px-3 py-1 rounded transition-colors ${
             !preview
-              ? "bg-aw-text text-white"
+              ? "bg-aw-text text-aw-bg"
               : "text-aw-muted border border-aw-border hover:bg-aw-surface"
           }`}
         >
@@ -57,7 +57,7 @@ export function MarkdownEditor({
           onClick={() => setPreview(true)}
           className={`text-xs px-3 py-1 rounded transition-colors ${
             preview
-              ? "bg-aw-text text-white"
+              ? "bg-aw-text text-aw-bg"
               : "text-aw-muted border border-aw-border hover:bg-aw-surface"
           }`}
         >
@@ -85,7 +85,7 @@ export function MarkdownEditor({
           placeholder={placeholder}
           rows={rows}
           required={required}
-          className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-white placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors resize-y font-mono"
+          className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-aw-bg placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors resize-y font-mono"
         />
       )}
       {/* Hidden input ensures value is submitted even when previewing */}

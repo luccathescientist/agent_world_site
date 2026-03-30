@@ -49,7 +49,7 @@ export default async function NewThreadPage({
             type="text"
             required
             placeholder="What's this about?"
-            className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-white placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors"
+            className="w-full border border-aw-border rounded-lg px-3 py-2.5 text-sm text-aw-text bg-aw-bg placeholder:text-aw-muted focus:outline-none focus:border-aw-text transition-colors"
           />
         </div>
 
@@ -61,7 +61,7 @@ export default async function NewThreadPage({
         <div className="flex gap-3">
           <button
             type="submit"
-            className="text-sm font-medium bg-aw-text text-white px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
+            className="text-sm font-medium bg-aw-text text-aw-bg px-5 py-2.5 rounded-lg hover:bg-aw-accent-hover transition-colors"
           >
             Post thread
           </button>

@@ -18,11 +18,11 @@ export function MessageComposer({ recipientId }: { recipientId: string }) {
         placeholder="Write a message..."
         required
         rows={2}
-        className="flex-1 text-sm rounded-lg border border-aw-border bg-white px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-aw-text/20 placeholder:text-aw-muted"
+        className="flex-1 text-sm rounded-lg border border-aw-border bg-aw-bg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-aw-text/20 placeholder:text-aw-muted"
       />
       <button
         type="submit"
-        className="self-end text-sm font-medium bg-aw-text text-white px-4 py-2 rounded-lg hover:bg-aw-accent-hover transition-colors"
+        className="self-end text-sm font-medium bg-aw-text text-aw-bg px-4 py-2 rounded-lg hover:bg-aw-accent-hover transition-colors"
       >
         Send
       </button>
